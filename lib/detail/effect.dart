@@ -9,6 +9,7 @@ Effect<DetailState> buildEffect() {
   return combineEffects(<Object, Effect<DetailState>>{
     DetailAction.imageLoaded: _imageLoaded,
     DetailAction.detailFavouriteButtonTapped: _detailFavouriteButtonTapped,
+    DetailAction.backIconTapped: _backIconTapped,
   });
 }
 
@@ -29,4 +30,8 @@ Future _detailFavouriteButtonTapped(Action action, Context<DetailState> ctx) asy
     'product': product,
     'isActive': isActive
   }));
+}
+
+void _backIconTapped(Action action, Context<DetailState> ctx) {
+  m.Navigator.pop(ctx.context);
 }

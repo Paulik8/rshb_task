@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:rshb_test/colors.dart';
 import 'package:rshb_test/detail/view.dart';
 import 'package:rshb_test/home/action.dart';
@@ -187,9 +187,27 @@ class CompositeRating extends StatelessWidget {
     this.fontSize = 10
   });
 
+  String _buildRatingPlural(int howMany) {
+    // if (howMany == 0) {
+    //   return 'Нет оценок';
+    // } else if (howMany ) {
+
+    // }
+    return Intl.plural(
+      howMany,
+      zero: 'Нет оценок',
+      one: '$howMany оценка',
+      few: '$howMany оценки',
+      many: '$howMany оценок',
+      other: '$howMany оценок',
+      locale: 'ru'
+    );
+  }
+
   Widget _buildRatingCount() =>
       Text(
-        '${item.ratingCount.toString()} оценка',
+        _buildRatingPlural(item.ratingCount),
+        // '${item.ratingCount.toString()} оценка',
         style: TextStyle(
           fontFamily: 'SF Pro Display',
           fontSize: fontSize,

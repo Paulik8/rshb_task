@@ -7,6 +7,7 @@ enum DetailAction {
   updateCachedImage,
   detailFavouriteButtonTapped,
   setDetailFavouriteStatus,
+  backIconTapped,
 }
 
 class DetailActionCreator {
@@ -25,6 +26,10 @@ class DetailActionCreator {
 
   static Action setDetailFavouriteStatus(Product product) {
     return Action(DetailAction.setDetailFavouriteStatus, payload: product);
+  }
+
+  static Action backIconTapped() {
+    return Action(DetailAction.backIconTapped);
   }
 
 }

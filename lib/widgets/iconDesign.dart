@@ -1,6 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:rshb_test/colors.dart';
 
+class BackIcon extends StatelessWidget {
+
+  final double size;
+  final Function onTap;
+
+  const BackIcon({
+    this.size,
+    this.onTap,
+  });
+
+  Widget _buildTapWrapper(Widget child) =>
+    GestureDetector(
+      onTap: onTap,
+      child: child,
+    );
+
+  @override
+  Widget build(BuildContext context) =>
+    _buildTapWrapper(IconWrapper(
+      icon: 'assets/icons/back.png',
+      size: size,
+    ));
+
+}
+
 class FavouritesIcon extends StatelessWidget {
 
   final double size;
@@ -82,10 +107,12 @@ class IconDesign extends StatefulWidget {
 
   final String icon;
   final double size;
+  final double angle;
 
   const IconDesign({
     this.icon,
     this.size,
+    this.angle = 0,
   });
 
   @override
@@ -97,11 +124,15 @@ class IconDesignState extends State<IconDesign> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: widget.size,
-      width: widget.size,
-      child: Image.asset(widget.icon, fit: BoxFit.fitWidth,)
+    return Transform.rotate(
+      angle: widget.angle,
+      child: Container(
+        height: widget.size,
+        width: widget.size,
+        child: Image.asset(widget.icon, fit: BoxFit.fitWidth,)
+      )
     );
+    
   }
 
 }

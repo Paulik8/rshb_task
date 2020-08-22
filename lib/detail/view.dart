@@ -1,16 +1,13 @@
-import 'dart:ui' as ui;
+import 'dart:math' as math;
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:rshb_test/colors.dart';
 import 'package:rshb_test/detail/action.dart';
 import 'package:rshb_test/detail/state.dart';
-import 'package:rshb_test/imageLoader.dart';
 import 'package:rshb_test/product/models/cachedImage.dart';
 import 'package:rshb_test/product/models/catalogModel.dart';
-import 'package:rshb_test/widgets/converters.dart';
+import 'package:rshb_test/strings.dart';
 import 'package:rshb_test/widgets/iconDesign.dart';
 import 'package:rshb_test/widgets/productCard.dart';
 import 'package:rshb_test/widgets/textCreator.dart';
@@ -110,9 +107,6 @@ class DetailScreen extends StatelessWidget {
       ),
     );
 
-  List<Widget> _buildCharacteristics() =>
-    item.characteristics.map((e) => CharacteristicDesign(item: e)).toList();
-
   Widget _buildContent() =>
     Column(
       children: [
@@ -136,9 +130,10 @@ class DetailScreen extends StatelessWidget {
         SizedBox(height: 54,),
         _buildText(),
         SizedBox(height: 40,),
-        Column(
-          children: _buildCharacteristics(),
-        )
+        item.characteristics.isNotEmpty ? CharacteristicsDesign(
+          items: item.characteristics.map((e) => CharacteristicItem(item: e)).toList(),
+          visibleSize: item.characteristics.length <= 3 ? item.characteristics.length : 3,
+        ) : Container(),
       ],
     );
 
@@ -157,7 +152,7 @@ class DetailScreen extends StatelessWidget {
               boxShadow: (image == null || !image.widthMoreHeight) ? [
                 BoxShadow(
                   spreadRadius: 0,
-                  blurRadius: 4,
+                  blurRadius: 2,
                   offset: Offset(0, -2),
                   color: Colors.grey[200]
                 )
@@ -180,6 +175,12 @@ class DetailScreen extends StatelessWidget {
         'isActive': isActive,
       })),
     );
+  
+  Widget _buildBackIcon() =>
+    BackIcon(
+      size: 40,
+      onTap: () => dispatch(DetailActionCreator.backIconTapped()),
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -194,12 +195,17 @@ class DetailScreen extends StatelessWidget {
               right: 0,
               child: _buildImage()
             ),
-              _buildDescription(context),
-              Positioned(
-                top: 60,
-                right: 16,
-                child: _buildFavouritesIcon(),
-              )
+            _buildDescription(context),
+            Positioned(
+              top: 60,
+              right: 16,
+              child: _buildFavouritesIcon(),
+            ),
+            Positioned(
+              top: 60,
+              left: 16,
+              child: _buildBackIcon(),
+            )
           ],
         )
       )
@@ -208,11 +214,95 @@ class DetailScreen extends StatelessWidget {
 
 }
 
-class CharacteristicDesign extends StatelessWidget {
+class CharacteristicsDesign extends StatefulWidget {
+
+  final List<Widget> items;
+  final int visibleSize;
+
+  const CharacteristicsDesign({
+    this.items,
+    this.visibleSize,
+  });
+
+  @override
+  CharacteristicsDesignState createState() => CharacteristicsDesignState();
+
+}
+
+class CharacteristicsDesignState extends State<CharacteristicsDesign> {
+
+  bool _isExpanded;
+  List<Widget> _visibleItems;
+  double _angle;
+  bool _isExpandedList;
+
+  @override
+  void initState() {
+    _isExpanded = false;
+    _angle = 0;
+    _isExpandedList = widget.items.length <= 3 ? false : true;
+    _visibleItems = !_isExpandedList ? widget.items : widget.items.sublist(0, widget.visibleSize);
+    super.initState();
+  }
+
+  void _buttonTapped() =>
+    _isExpanded ? setState(() {
+      _isExpanded = !_isExpanded;
+      _angle = 0;
+      _visibleItems = widget.items.sublist(0, widget.visibleSize);
+    }) : setState(() {
+      _isExpanded = !_isExpanded;
+      _angle = -math.pi / 2;
+      _visibleItems = widget.items;
+    });
+
+  Widget _buildButtonTitle() =>
+    Text(
+      _isExpanded ? Strings.characteristicsExpanded : Strings.characteristicsHidden,
+      style: TextStyle(
+        fontFamily: 'SF Pro Display',
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: ColorsDesign.ratingLabelExcellent,
+        letterSpacing: -0.2
+      ),
+    );
+
+  Widget _buildButtonSymbol() =>
+    IconDesign(
+      icon: 'assets/icons/arrow.png',
+      size: 24,
+      angle: _angle,
+    );
+
+  Widget _buildButton() =>
+    GestureDetector(
+      onTap: _buttonTapped,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _buildButtonTitle(),
+          _buildButtonSymbol()
+        ],
+      )
+    );
+    
+
+  @override
+  Widget build(BuildContext context) =>
+    Column(
+      children: List<Widget>()
+      ..addAll(_visibleItems)
+      ..add(_isExpandedList ? _buildButton() : Container())
+    );
+
+}
+
+class CharacteristicItem extends StatelessWidget {
 
   final Characteristic item;
 
-  const CharacteristicDesign({
+  const CharacteristicItem({
     this.item,
   });
 
