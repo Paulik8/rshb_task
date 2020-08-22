@@ -23,10 +23,6 @@ Future<CachedImage> getImageFileFromAssets(String path) async {
     widthMoreHeight: image.width >= image.height,
     image: Image.file(file, fit: image.width >= image.height ? BoxFit.fitWidth : BoxFit.fitHeight,)
   );
-  // dispatch(HomeActionCreator.imageLoaded(<String, dynamic>{
-  //   'url': path,
-  //   'image': cachedImage
-  // }));
   return cachedImage;
 }
 
@@ -39,10 +35,6 @@ Future<CachedImage> getImageFileFromNetwork(String path) async {
     widthMoreHeight: image.width >= image.height,
     image: Image.memory(fileBytes, fit: image.width >= image.height ? BoxFit.fitWidth : BoxFit.cover,),
   );
-  // dispatch(HomeActionCreator.imageLoaded(<String, dynamic>{
-  //   'url': path,
-  //   'image': cachedImage
-  // }));
   return cachedImage;
 }
 

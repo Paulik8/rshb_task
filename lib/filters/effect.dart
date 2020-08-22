@@ -45,18 +45,6 @@ void _sortFilterTapped(Action action, Context<FilterState> ctx) {
   } else {
     activeFilters.removeWhere((el) => el == id);
   }
-  // if (id == 0) {
-  //   if (isActive) {
-  //     sortedProducts = sorter.sortByPrice(ctx.state.currentProducts);
-  //   } else {
-  //     sortedProducts = sorter.sortByRating(ctx.state.currentProducts);
-  //   }
-  // } else {
-  //   if (isActive) {
-
-  //   }
-  //   sortedProducts = sorter.sortByCategoryId(ctx.state.currentProducts, id: id);
-  // }
   ctx.dispatch(FilterActionCreator.sortFilterSet(<String, dynamic>{
     'activeFilters': activeFilters,
     'products': finalProducts,

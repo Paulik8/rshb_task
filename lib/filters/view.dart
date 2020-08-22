@@ -1,7 +1,5 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:rshb_test/colors.dart';
-import 'package:rshb_test/filters/action.dart';
 import 'package:rshb_test/filters/state.dart';
 import 'package:rshb_test/product/models/catalogModel.dart';
 import 'package:rshb_test/widgets/filterDesign.dart';

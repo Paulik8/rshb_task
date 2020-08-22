@@ -188,11 +188,6 @@ class CompositeRating extends StatelessWidget {
   });
 
   String _buildRatingPlural(int howMany) {
-    // if (howMany == 0) {
-    //   return 'Нет оценок';
-    // } else if (howMany ) {
-
-    // }
     return Intl.plural(
       howMany,
       zero: 'Нет оценок',
@@ -207,7 +202,6 @@ class CompositeRating extends StatelessWidget {
   Widget _buildRatingCount() =>
       Text(
         _buildRatingPlural(item.ratingCount),
-        // '${item.ratingCount.toString()} оценка',
         style: TextStyle(
           fontFamily: 'SF Pro Display',
           fontSize: fontSize,

@@ -10,11 +10,7 @@ Reducer<FilterState> buildReducer() {
 
 FilterState _sortFilterSet(FilterState state, Action action) {
   final sortedProducts = action.payload['products'];
-  // final changedCatalog = state.catalog.copyWith(
-  //   products: sortedProducts
-  // );
   return state.clone()
-    // ..catalog = changedCatalog
     ..currentProducts = sortedProducts
     ..activeFilters = action.payload['activeFilters'];
 }

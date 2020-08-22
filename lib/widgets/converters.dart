@@ -22,10 +22,6 @@ class ProductSorter {
     return products;
   }
 
-  // List<Product> sortByCategoryId(List<Product> products, {int id}) {
-  //   return products.where((el) => el.categoryId == id);
-  // }
-
   List<Product> sortByCategoryIdAndSortedByFilter(List<Product> products, {List<Product> cProducts, int id, bool byRating = true}) {
     if (cProducts == null) {
       cProducts = List();

@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' as m;
 import 'package:rshb_test/home/action.dart';
 import 'package:rshb_test/home/state.dart';
 import 'package:http/http.dart' as http;
-import 'package:rshb_test/imageLoader.dart';
 import 'package:rshb_test/product/models/cachedImage.dart';
 import 'package:rshb_test/product/models/catalogModel.dart';
 import 'package:rshb_test/sharedPrefs.dart';
