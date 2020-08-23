@@ -14,14 +14,11 @@ final String url = '/Users/paulik/Projects/flutterApps/rshb_test';
 
 Future<CachedImage> getImageFileFromAssets(String path) async {
   final byteData = await rootBundle.load('$path');
-  print('$url/$path');
-  final file = File('$url/$path');
-  await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-  final image = await decodeImageFromList(file.readAsBytesSync());
-  print('${image.height}, ${image.width}');
+  final data = byteData.buffer.asUint8List();
+  final image = await decodeImageFromList(data);
   final cachedImage = CachedImage(
     widthMoreHeight: image.width >= image.height,
-    image: Image.file(file, fit: image.width >= image.height ? BoxFit.fitWidth : BoxFit.fitHeight,)
+    image: Image.memory(data, fit: image.width >= image.height ? BoxFit.fitWidth : BoxFit.cover,),
   );
   return cachedImage;
 }
@@ -30,7 +27,6 @@ Future<CachedImage> getImageFileFromNetwork(String path) async {
   final response = await http.get(path);
   final fileBytes = response.bodyBytes;
   final image = await decodeImageFromList(fileBytes);
-  print('${image.height}, ${image.width}');
   final cachedImage = CachedImage(
     widthMoreHeight: image.width >= image.height,
     image: Image.memory(fileBytes, fit: image.width >= image.height ? BoxFit.fitWidth : BoxFit.cover,),

@@ -8,7 +8,7 @@ import 'package:rshb_test/product/models/catalogModel.dart';
 import 'package:rshb_test/sharedPrefs.dart';
 import 'package:rshb_test/widgets/converters.dart';
 
-const url = "https://gist.githubusercontent.com/Paulik8/4a8b3e4f160f93ee8c0b770157c78dd8/raw/7c9d503bd21ba06ada5007d484c3f057e53be363/farmer_json";
+const url = "https://gist.githubusercontent.com/Paulik8/4a8b3e4f160f93ee8c0b770157c78dd8/raw/3b1f033b87c4b3e81d59206ebe71512abaea371f/farmer_json";
 
 Effect<HomeState> buildEffect() {
   return combineEffects(<Object, Effect<HomeState>>{

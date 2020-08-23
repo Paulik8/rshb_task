@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       onGenerateRoute: (settings) => MaterialPageRoute(builder: (context) => 
-        Router.generateRoute().buildPage(settings.name, settings.arguments),
+        CustomRouter.generateRoute().buildPage(settings.name, settings.arguments),
       ),
     );
   }
